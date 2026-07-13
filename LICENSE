@@ -1,4 +1,5 @@
-This software is copyright (C) by Nick Wellnhofer <wellnhofer@aevum.de>.
+This software is copyright (C)      by Nick Wellnhofer <wellnhofer@aevum.de>
+                       and (C) 2026 by gemmaro <gemmaro.dev@gmail.com>.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
@@ -12,7 +13,8 @@ b) the "Artistic License"
 
 --- The GNU General Public License, Version 1, February 1989 ---
 
-This software is Copyright (C) by Nick Wellnhofer.
+This software is Copyright (C)      by Nick Wellnhofer
+             and Copyright (C) 2026 by gemmaro.
 
 This is free software, licensed under:
 
@@ -213,7 +215,8 @@ POSSIBILITY OF SUCH DAMAGES.
 
 --- The Artistic License 1.0 ---
 
-This software is Copyright (C) by Nick Wellnhofer.
+This software is Copyright (C)      by Nick Wellnhofer
+             and Copyright (C) 2026 by gemmaro.
 
 This is free software, licensed under:
 

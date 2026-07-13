@@ -334,7 +334,8 @@ library version linked against at run time or compile time.
 
 =head1 COPYRIGHT
 
-This software is copyright (C) by Nick Wellnhofer.
+This software is copyright (C) by Nick Wellnhofer
+and copyright (C) 2026 gemmaro.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
