@@ -20,10 +20,10 @@
 #include "XSUB.h"
 
 #include <stdlib.h>
-#include <cmark.h>
+#include <cmark-gfm.h>
 
-#if CMARK_VERSION < 0x001500
-  #error libcmark 0.21.0 is required.
+#if CMARK_GFM_VERSION < 0x001500
+  #error libcmark-gfm 0.29.0 is required.
 #endif
 
 #if PERL_VERSION <= 8
@@ -39,39 +39,6 @@
 #define cmark_node_render_man         cmark_render_man
 #define cmark_node_render_commonmark  cmark_render_commonmark
 #define cmark_node_render_latex       cmark_render_latex
-
-/* Backward compatibility */
-
-#if CMARK_VERSION < 0x001700
-
-    /* Older than 0.23.0 */
-
-    static const char*
-    S_unsupported_get_utf8(cmark_node *node) {
-        (void)node;
-        return NULL;
-    }
-
-    static const char*
-    S_unsupported_set_utf8(cmark_node *node, const char *val) {
-        (void)node;
-        (void)val;
-        return 0;
-    }
-
-    #define cmark_node_get_on_enter  S_unsupported_get_utf8
-    #define cmark_node_get_on_exit   S_unsupported_get_utf8
-    #define cmark_node_set_on_enter  S_unsupported_set_utf8
-    #define cmark_node_set_on_exit   S_unsupported_set_utf8
-
-#endif /* CMARK_VERSION < 0x001700 */
-
-#ifdef CMARK_OPT_UNSAFE
-  #define OPT_UNSAFE CMARK_OPT_UNSAFE
-#else
-  /* Hardcoded value, ignored by old libcmark versions. */
-  #define OPT_UNSAFE (1 << 17)
-#endif
 
 static SV*
 S_create_or_incref_node_sv(pTHX_ cmark_node *node) {
@@ -181,9 +148,9 @@ static int
 S_process_options(int options) {
     if (options & CMARK_OPT_SAFE) {
         /* SAFE takes predence over UNSAFE. */
-        options &= ~OPT_UNSAFE;
+        options &= ~CMARK_OPT_UNSAFE;
     }
-    else if ((options & OPT_UNSAFE) == 0) {
+    else if ((options & CMARK_OPT_UNSAFE) == 0) {
         /* For old libcmark versions, set SAFE unless UNSAFE was set. */
         options |= CMARK_OPT_SAFE;
     }
@@ -220,22 +187,12 @@ BOOT:
             { "NODE_STRONG", CMARK_NODE_STRONG },
             { "NODE_LINK", CMARK_NODE_LINK },
             { "NODE_IMAGE", CMARK_NODE_IMAGE },
-#if CMARK_VERSION >= 0x001700
-            /* libcmark 0.23.0 */
             { "NODE_CUSTOM_BLOCK", CMARK_NODE_CUSTOM_BLOCK },
             { "NODE_CUSTOM_INLINE", CMARK_NODE_CUSTOM_INLINE },
             { "NODE_HTML_BLOCK", CMARK_NODE_HTML_BLOCK },
             { "NODE_HEADING", CMARK_NODE_HEADING },
             { "NODE_THEMATIC_BREAK", CMARK_NODE_THEMATIC_BREAK },
             { "NODE_HTML_INLINE", CMARK_NODE_HTML_INLINE },
-#else
-            { "NODE_CUSTOM_BLOCK", CMARK_NODE_NONE },
-            { "NODE_CUSTOM_INLINE", CMARK_NODE_NONE },
-            { "NODE_HTML_BLOCK", CMARK_NODE_HTML },
-            { "NODE_HEADING", CMARK_NODE_HEADER },
-            { "NODE_THEMATIC_BREAK", CMARK_NODE_HRULE },
-            { "NODE_HTML_INLINE", CMARK_NODE_INLINE_HTML },
-#endif
 
             { "NO_LIST", CMARK_NO_LIST },
             { "BULLET_LIST", CMARK_BULLET_LIST },
@@ -254,24 +211,19 @@ BOOT:
             { "OPT_SOURCEPOS", CMARK_OPT_SOURCEPOS },
             { "OPT_HARDBREAKS", CMARK_OPT_HARDBREAKS },
             { "OPT_SAFE", CMARK_OPT_SAFE },
-#if CMARK_VERSION >= 0x001A00
-            /* libcmark 0.26.0 */
             { "OPT_NOBREAKS", CMARK_OPT_NOBREAKS },
-#else
-            { "OPT_NOBREAKS", 0 },
-#endif
             { "OPT_NORMALIZE", CMARK_OPT_NORMALIZE },
             { "OPT_VALIDATE_UTF8", CMARK_OPT_VALIDATE_UTF8 },
             { "OPT_SMART", CMARK_OPT_SMART },
-            { "OPT_UNSAFE", OPT_UNSAFE }
+            { "OPT_UNSAFE", CMARK_OPT_UNSAFE }
         };
         size_t num_constants = sizeof(constants) / sizeof(constants[0]);
         size_t i;
         HV *stash = gv_stashpv("CommonMark", 0);
 
-        if (cmark_version() != CMARK_VERSION) {
+        if (cmark_version() != CMARK_GFM_VERSION) {
             warn("Compiled against libcmark %s, but runtime version is %s",
-                 CMARK_VERSION_STRING, cmark_version_string());
+                 CMARK_GFM_VERSION_STRING, cmark_version_string());
         }
 
         for (i = 0; i < num_constants; i++) {
@@ -360,7 +312,7 @@ cmark_compile_time_version(package)
     SV *package = NO_INIT
 CODE:
     (void)package;
-    RETVAL = CMARK_VERSION;
+    RETVAL = CMARK_GFM_VERSION;
 OUTPUT:
     RETVAL
 
@@ -369,7 +321,7 @@ cmark_compile_time_version_string(package)
     SV *package = NO_INIT
 CODE:
     (void)package;
-    RETVAL = CMARK_VERSION_STRING;
+    RETVAL = CMARK_GFM_VERSION_STRING;
 OUTPUT:
     RETVAL
 
@@ -489,15 +441,7 @@ PREINIT:
     int         retval;
 CODE:
     old_parent = cmark_node_parent(other);
-#if CMARK_VERSION < 0x001800
-    /* Older than 0.24.0 */
-    retval = cmark_node_insert_before(node, other);
-    if (retval) {
-        cmark_node_unlink(node);
-    }
-#else
     retval = cmark_node_replace(node, other);
-#endif
     if (!retval) {
         croak("replace: invalid operation");
     }
@@ -523,12 +467,22 @@ POSTCALL:
     S_transfer_refcount(aTHX_ old_parent, new_parent);
 
 char*
-interface_render(cmark_node *root, int options = 0)
+cmark_node_render_html(cmark_node *root, int options = 0)
 INIT:
     options = S_process_options(options);
-INTERFACE:
-    cmark_node_render_html
-    cmark_node_render_xml
+CODE:
+    RETVAL = cmark_render_html(root, options, NULL);
+OUTPUT:
+    RETVAL
+
+char*
+cmark_node_render_xml(cmark_node *root, int options = 0)
+INIT:
+    options = S_process_options(options);
+CODE:
+    RETVAL = cmark_render_xml(root, options);
+OUTPUT:
+    RETVAL
 
 char*
 interface_render_width(cmark_node *root, int options = 0, int width = 0)
