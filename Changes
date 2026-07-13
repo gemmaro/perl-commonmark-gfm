@@ -1,4 +1,9 @@
-Revision history for Perl module CommonMark
+Revision history for Perl module CommonMark::GFM
+
+0.320000  2026-07-14
+    - Initial release of CommonMark::GFM module
+    - Module namespace has changed from CommonMark:: to CommonMark::GFM::
+    - Removed backward compatibility with old libcmark
 
 0.310100  2024-08-13
     - Recommend and test with libcmark 0.31.1

@@ -7,7 +7,7 @@ package CommonMark::GFM;
 use XSLoader;
 
 BEGIN {
-    our $VERSION = '0.310100';
+    our $VERSION = '0.320000';
     XSLoader::load('CommonMark::GFM', $VERSION);
 }
 
