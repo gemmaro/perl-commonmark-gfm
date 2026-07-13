@@ -14,13 +14,13 @@ cmark_event_type    T_IV
 
 INPUT
 T_NODE
-    $var = (cmark_node*)S_sv2c(aTHX_ $arg, \"CommonMark::GFM::Node\", 21, cv,
+    $var = (cmark_node*)S_sv2c(aTHX_ $arg, \"CommonMark::GFM::Node\", cv,
                                \"$var\");
 T_ITER
-    $var = (cmark_iter*)S_sv2c(aTHX_ $arg, \"CommonMark::GFM::Iterator\", 25, cv,
+    $var = (cmark_iter*)S_sv2c(aTHX_ $arg, \"CommonMark::GFM::Iterator\", cv,
                                \"$var\");
 T_PARSER
-    $var = (cmark_parser*)S_sv2c(aTHX_ $arg, \"CommonMark::GFM::Parser\", 23, cv,
+    $var = (cmark_parser*)S_sv2c(aTHX_ $arg, \"CommonMark::GFM::Parser\", cv,
                                  \"$var\");
 T_UTF8
     $var = SvPVutf8_nolen($arg)

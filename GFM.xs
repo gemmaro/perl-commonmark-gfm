@@ -77,7 +77,7 @@ S_create_or_incref_node_sv(pTHX_ cmark_node *node) {
         PL_sv_objcount++;
 #endif
         SvUPGRADE(obj, SVt_PVMG);
-        stash = gv_stashpvn("CommonMark::GFM::Node", 21, GV_ADD);
+        stash = gv_stashpv("CommonMark::GFM::Node", GV_ADD);
         SvSTASH_set(obj, (HV*)SvREFCNT_inc(stash));
 
         /* Recurse into parent. */
@@ -134,9 +134,9 @@ S_transfer_refcount(pTHX_ cmark_node *from, cmark_node *to) {
 
 /* Get C struct pointer from an SV argument. */
 static void*
-S_sv2c(pTHX_ SV *sv, const char *class_name, STRLEN len, CV *cv,
+S_sv2c(pTHX_ SV *sv, const char *class_name, CV *cv,
        const char *var_name) {
-    if (!SvROK(sv) || !sv_derived_from_pvn(sv, class_name, len, 0)) {
+    if (!SvROK(sv) || !sv_derived_from_pv(sv, class_name, 0)) {
         const char *sub_name = GvNAME(CvGV(cv));
         croak("%s: %s is not of type %s", sub_name, var_name, class_name);
     }
