@@ -1,25 +1,52 @@
-=begin html
+=head1 Perl bindings for the GitHub Flavored Markdown C library
 
-<p>
-<a href="https://github.com/nwellnhof/perl-commonmark/actions"><img src="https://github.com/nwellnhof/perl-commonmark/actions/workflows/ci.yml/badge.svg"></a>
-<a href="https://badge.fury.io/pl/CommonMark"><img src="https://badge.fury.io/pl/CommonMark.svg" alt="CPAN version"></a>
-</p>
+This distribution is a wrapper around I<libcmark-gfm>, the official
+GitHub Flavored Markdown (GFM) C library.
 
-=end html
-
-=head1 Perl bindings for the CommonMark C library
-
-This distribution is a wrapper around I<libcmark>, the official CommonMark C
-library.
+This is a GFM variant of L<CommonMark> module.  Please note that this
+variant removes backward compatibilities which exists in the
+CommonMark module.
 
 =head2 Installation
 
-See section "Installation" in the POD for the CommonMark module.
+See section "Installation" in the POD for the L<CommonMark::GFM> module.
+
+=head2 Development
+
+Example Direnv setup on OpenBSD (shell is Bash):
+
+  layout perl
+  path_add LD_LIBRARY_PATH vendor/cmark-gfm/build/src
+  perl Makefile.PL \
+       INC="-Ivendor/cmark-gfm/src -Ivendor/cmark-gfm/build/src" \
+       LIBS="-Lvendor/cmark-gfm/build/src -lcmark-gfm"
+
+Fix CMake minimum required version to 3.5:
+
+  cmake_minimum_required(VERSION 3.5)
+
+You may (or may not) find clangd useful.  Example C<compile_flags.txt>:
+
+  -I/usr/libdata/perl5/amd64-openbsd/CORE
+  -Ivendor/cmark-gfm/src
+  -Ivendor/cmark-gfm/build/src
+  -Wall -Wextra
+
+This project use Dist::Zilla:
+
+  dzil build
+
+=head2 Acknowledgements
+
+This module is based on the L<CommonMark> module by Nick Wellnhofer.
+The module repository is at L<GitHub|https://github.com/nwellnhof/perl-commonmark>.
 
 =head2 Copyright
 
-This software is copyright (C) by Nick Wellnhofer.
+This software is:
+
+  copyright (C)      by Nick Wellnhofer
+  copyright (C) 2026 by gemmaro
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
-

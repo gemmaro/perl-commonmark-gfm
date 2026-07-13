@@ -1,70 +1,67 @@
 =head1 NAME
 
-CommonMark - Interface to the CommonMark C library
+CommonMark::GFM - Interface to the GitHub Flavored Markdown C library
 
 =head1 SYNOPSIS
 
-    use CommonMark;
+    use CommonMark::GFM;
 
-    my $doc = CommonMark->parse(
+    my $doc = CommonMark::GFM->parse(
         file  => $file,
         smart => 1,
     );
 
-    my $html = CommonMark->markdown_to_html($markdown);
-    my $doc  = CommonMark->parse_file($file);
-    my $doc  = CommonMark->parse_document($markdown);
-    my $doc  = CommonMark->create_document;
+    my $html = CommonMark::GFM->markdown_to_html($markdown);
+    my $doc  = CommonMark::GFM->parse_file($file);
+    my $doc  = CommonMark::GFM->parse_document($markdown);
+    my $doc  = CommonMark::GFM->create_document;
 
 =head1 DESCRIPTION
 
-This module is a wrapper around the official CommonMark C library
-L<I<libcmark>|https://github.com/commonmark/cmark/>. It closely follows the
+This module is a wrapper around the official GitHub Flavored Markdown C library
+L<I<libcmark-gfm>|https://github.com/github/cmark-gfm/>. It closely follows the
 original API.
 
 The main module provides some entry points to parse documents and convenience
 functions for node creation. The bulk of features is available through
-L<CommonMark::Node> objects of which the parse tree is made.
-L<CommonMark::Iterator> is a useful class to walk through the nodes in a
-tree. L<CommonMark::Parser> provides a push parser interface.
+L<CommonMark::GFM::Node> objects of which the parse tree is made.
+L<CommonMark::GFM::Iterator> is a useful class to walk through the nodes in a
+tree. L<CommonMark::GFM::Parser> provides a push parser interface.
 
 =head2 Installation
 
-=head3 Installation of libcmark
+=head3 Installation of libcmark-gfm
 
-Please note that the I<libcmark> API isn't stable yet. This version of the
+Please note that the I<libcmark-gfm> API isn't stable yet. This version of the
 Perl bindings is known to work with all releases between 0.21.0 and 0.31.1,
 but there's no guarantee that it can be compiled with later versions. Also
-note that upgrading a dynamically linked version of I<libcmark> may require
+note that upgrading a dynamically linked version of I<libcmark-gfm> may require
 recompilation of the Perl distribution.
 
-It is recommended to use the I<libcmark> packages provided by recent Linux
-distros. On Debian or Ubuntu, run:
+It is recommended to use the I<libcmark-gfm> packages provided by
+recent Linux distros (Red Hat or CentOS don't have this library yet as
+of this writing). On Debian or Ubuntu, run:
 
-    sudo apt-get install libcmark-dev
-
-On Red Hat or CentOS, run:
-
-    sudo yum install cmark-devel
+    sudo apt-get install libcmark-gfm-dev
 
 On macOS using L<Homebrew|https://brew.sh>, run:
 
-    brew install cmark
+    brew install cmark-gfm
 
-To install I<libcmark> from source:
+To install I<libcmark-gfm> from source:
 
-    curl -LJO https://github.com/commonmark/cmark/archive/0.31.1.tar.gz
-    tar xzf cmark-0.31.1.tar.gz
-    cd cmark-0.31.1
+    curl -LJO https://github.com/github/cmark-gfm/archive/0.29.0.gfm.13.tar.gz
+    tar xzf cmark-gfm-0.29.0.gfm.13.tar.gz
+    cd cmark-gfm-0.29.0
     make [INSTALL_PREFIX=/prefix]
     make test
     make install
 
-See the I<libcmark> README for details.
+See the I<libcmark-gfm> README for details.
 
 =head3 Installation from a CPAN tarball
 
-If I<libcmark> is in a standard location:
+If I<libcmark-gfm> is in a standard location:
 
     perl Makefile.PL
     make
@@ -75,7 +72,7 @@ On macOS using Homebrew, specify the include and library locations:
 
     perl Makefile.PL \
         INC="-I$(brew --prefix)/include" \
-        LIBS="-L$(brew --prefix)/lib -lcmark"
+        LIBS="-L$(brew --prefix)/lib -lcmark-gfm"
     make
     make test
     make install
@@ -84,7 +81,7 @@ Otherwise, specify the include and library locations:
 
     perl Makefile.PL \
         INC="-I/prefix/include" \
-        LIBS="-L/prefix/lib -lcmark"
+        LIBS="-L/prefix/lib -lcmark-gfm"
     make
     make test
     make install
@@ -92,7 +89,7 @@ Otherwise, specify the include and library locations:
 See the documentation of I<ExtUtils::MakeMaker> for additional options.
 The I<PERL_MM_OPT> environment variable is especially useful.
 
-    export PERL_MM_OPT='INC="-I..." LIBS="-L... -lcmark"'
+    export PERL_MM_OPT='INC="-I..." LIBS="-L... -lcmark-gfm"'
 
 =head3 Build from a repository checkout
 
@@ -108,35 +105,35 @@ so you can use the standard build process as well.
 
 =head2 markdown_to_html
 
-    my $html = CommonMark->markdown_to_html( $markdown, [$options] );
+    my $html = CommonMark::GFM->markdown_to_html( $markdown, [$options] );
 
 Converts a Markdown string to HTML. C<$options> is a bit field
 containing the L<parse options|/Parser options> and
-L<render options|CommonMark::Node/Render options> ORed together. It defaults
+L<render options|CommonMark::GFM::Node/Render options> ORed together. It defaults
 to zero (C<OPT_DEFAULT>).
 
 This method is the equivalent to calling C<parse_document> and then
-L<C<render_html>|CommonMark::Node/C<render_*>> on the resulting document,
-or calling C<parse> and then L<C<render>|CommonMark::Node/C<render>>:
+L<C<render_html>|CommonMark::GFM::Node/C<render_*>> on the resulting document,
+or calling C<parse> and then L<C<render>|CommonMark::GFM::Node/C<render>>:
 
-    my $html = CommonMark->markdown_to_html( $markdown );
-    my $html = CommonMark->parse_document($markdown)->render_html;
-    my $html = CommonMark->parse(string => $markdown)->render(format => 'html');
+    my $html = CommonMark::GFM->markdown_to_html( $markdown );
+    my $html = CommonMark::GFM->parse_document($markdown)->render_html;
+    my $html = CommonMark::GFM->parse(string => $markdown)->render(format => 'html');
 
 Equivalent calls with parser and rendering options, which can all be passed
 to C<markdown_to_html()> but must be sent separately to the parse and render
 methods:
 
-    my $html = CommonMark->markdown_to_html(
+    my $html = CommonMark::GFM->markdown_to_html(
         $markdown,
         OPT_UNSAFE | OPT_SMART,
     );
 
-    my $html = CommonMark->parse_document(
+    my $html = CommonMark::GFM->parse_document(
         $markdown, OPT_SMART,
     )->render_html(OPT_UNSAFE);
 
-    my $html = CommonMark->parse(
+    my $html = CommonMark::GFM->parse(
         string => $markdown,
         smart  => 1,
     )->render(
@@ -146,14 +143,14 @@ methods:
 
 =head2 parse
 
-    my $doc = CommonMark->parse(
+    my $doc = CommonMark::GFM->parse(
         string        => $string,
         normalize     => $bool,    # Optional
         smart         => $bool,    # Optional
         validate_utf8 => $bool,    # Optional
     );
 
-    my $doc = CommonMark->parse(
+    my $doc = CommonMark::GFM->parse(
         file          => $handle,
         normalize     => $bool,    # Optional
         smart         => $bool,    # Optional
@@ -171,26 +168,26 @@ options enable the respective L<parser options|/"Parser options">:
 
 =item * C<validate_utf8>
 
-=item * C<normalize> (no-op as of libcmark 0.28)
+=item * C<normalize> (no-op, deprecated)
 
 =back
 
-Returns the L<CommonMark::Node> of the root document.
+Returns the L<CommonMark::GFM::Node> of the root document.
 
 =head2 parse_document
 
-    my $doc = CommonMark->parse_document( $markdown, [$options] )
+    my $doc = CommonMark::GFM->parse_document( $markdown, [$options] )
 
-Parses a CommonMark document from a string returning the L<CommonMark::Node>
+Parses a CommonMark::GFM document from a string returning the L<CommonMark::GFM::Node>
 of the document root. C<$options> is a bit field containing the parser
 options. It defaults to zero (C<OPT_DEFAULT>).
 
 =head2 parse_file
 
-    my $doc = CommonMark->parse_file( $file, [$options] );
+    my $doc = CommonMark::GFM->parse_file( $file, [$options] );
 
-Parses a CommonMark document from a file handle returning the
-L<CommonMark::Node> of the document root. C<$options> is a bit field
+Parses a CommonMark::GFM document from a file handle returning the
+L<CommonMark::GFM::Node> of the document root. C<$options> is a bit field
 containing the parser options. It defaults to zero (C<OPT_DEFAULT>).
 
 =head2 Parser options
@@ -198,15 +195,15 @@ containing the parser options. It defaults to zero (C<OPT_DEFAULT>).
 The parser and rendering options are a bit field created by ORing the
 following constants:
 
-    CommonMark::OPT_DEFAULT => 0
-    CommonMark::OPT_NORMALIZE
-    CommonMark::OPT_VALIDATE_UTF8
-    CommonMark::OPT_SMART
+    CommonMark::GFM::OPT_DEFAULT => 0
+    CommonMark::GFM::OPT_NORMALIZE
+    CommonMark::GFM::OPT_VALIDATE_UTF8
+    CommonMark::GFM::OPT_SMART
 
-Parser options can be imported from L<CommonMark> with tag C<opt>.
+Parser options can be imported from L<CommonMark::GFM> with tag C<opt>.
 
-    use CommonMark qw(:opt);
-    my $doc = CommonMark->parse_document(
+    use CommonMark::GFM qw(:opt);
+    my $doc = CommonMark::GFM->parse_document(
         $markdown,
         OPT_SMART | OPT_VALIDATE_UTF8,
     );
@@ -215,8 +212,9 @@ Parser options can be imported from L<CommonMark> with tag C<opt>.
 
 =item C<OPT_NORMALIZE>
 
-Makes sure that adjacent text nodes are merged in the parse tree. This option
-has no effect with libcmark 0.28 or higher which always normalizes text nodes.
+Deprecated.  Makes sure that adjacent text nodes are merged in the
+parse tree. This option has no effect with libcmark-gfm which always
+normalizes text nodes.
 
 =item C<OPT_SMART>
 
@@ -237,82 +235,82 @@ they are replaced with the Unicode replacement character C<U+FFFD>.
 
 =head2 Node creation
 
-    my $document = CommonMark->create_document(
+    my $document = CommonMark::GFM->create_document(
         children => \@children,
     );
-    my $header = CommonMark->create_heading(
+    my $header = CommonMark::GFM->create_heading(
         level    => $level,
         children => \@children,
         text     => $literal,
     );
-    my $paragraph = CommonMark->create_paragraph(
+    my $paragraph = CommonMark::GFM->create_paragraph(
         children => \@children,
         text     => $literal,
     );
-    my $block_quote = CommonMark->create_block_quote(
+    my $block_quote = CommonMark::GFM->create_block_quote(
         children => \@children,
     );
-    my $list = CommonMark->create_list(
+    my $list = CommonMark::GFM->create_list(
         type     => $type,
         delim    => $delim,
         start    => $start,
         tight    => $tight,
         children => \@children,
     );
-    my $item = CommonMark->create_item(
+    my $item = CommonMark::GFM->create_item(
         children => \@children,
     );
-    my $code_block = CommonMark->create_code_block(
+    my $code_block = CommonMark::GFM->create_code_block(
         fence_info => $fence_info,
         literal    => $literal,
     );
-    my $html = CommonMark->create_html_block(
+    my $html = CommonMark::GFM->create_html_block(
         literal => $html,
     );
-    my $custom_block = CommonMark->create_custom_block(
+    my $custom_block = CommonMark::GFM->create_custom_block(
         on_enter => $raw_prefix,
         on_exit  => $raw_suffix,
         children => \@children,
         text     => $literal,
     );
-    my $thematic_break = CommonMark->create_thematic_break;
-    my $text = CommonMark->create_text(
+    my $thematic_break = CommonMark::GFM->create_thematic_break;
+    my $text = CommonMark::GFM->create_text(
         literal => $literal,
     );
-    my $code = CommonMark->create_code(
+    my $code = CommonMark::GFM->create_code(
         literal => $literal,
     );
-    my $html_inline = CommonMark->create_html_inline(
+    my $html_inline = CommonMark::GFM->create_html_inline(
         literal => $literal,
     );
-    my $emph = CommonMark->create_emph(
+    my $emph = CommonMark::GFM->create_emph(
         children => \@children,
         text     => $literal,
     );
-    my $strong = CommonMark->create_strong(
+    my $strong = CommonMark::GFM->create_strong(
         children => \@children,
         text     => $literal,
     );
-    my $url = CommonMark->create_url(
+    my $url = CommonMark::GFM->create_url(
         url      => $url,
         title    => $title,
         children => \@children,
         text     => $literal,
     );
-    my $image = CommonMark->create_image(
+    my $image = CommonMark::GFM->create_image(
         url      => $url,
         title    => $title,
         children => \@children,
         text     => $literal,
     );
-    my $custom_inline = CommonMark->create_custom_inline(
+    my $custom_inline = CommonMark::GFM->create_custom_inline(
         on_enter => $raw_prefix,
         on_exit  => $raw_suffix,
         children => \@children,
         text     => $literal,
     );
-    my $softbreak = CommonMark->create_softbreak;
-    my $linebreak = CommonMark->create_linebreak;
+    my $softbreak = CommonMark::GFM->create_softbreak;
+    my $linebreak = CommonMark::GFM->create_linebreak;
 
 These convenience functions can be used to create nodes, set properties,
 and add children in a single operation. All parameters are optional.
@@ -322,14 +320,14 @@ children. The special C<text> parameter adds a single text child with
 literal C<$literal>. It can't be used together with C<children>. All other
 parameters correspond to a node property.
 
-=head2 libcmark version information
+=head2 libcmark-gfm version information
 
-    my $version = CommonMark->version;
-    my $string  = CommonMark->version_string;
-    my $version = CommonMark->compile_time_version;
-    my $string  = CommonMark->compile_time_version_string;
+    my $version = CommonMark::GFM->version;
+    my $string  = CommonMark::GFM->version_string;
+    my $version = CommonMark::GFM->compile_time_version;
+    my $string  = CommonMark::GFM->compile_time_version_string;
 
-Return the version number or version string of libcmark, either the
+Return the version number or version string of libcmark-gfm, either the
 library version linked against at run time or compile time.
 
 =head1 COPYRIGHT

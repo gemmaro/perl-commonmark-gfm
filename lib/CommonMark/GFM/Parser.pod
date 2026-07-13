@@ -1,26 +1,26 @@
 =head1 NAME
 
-CommonMark::Parser - Push parser interface
+CommonMark::GFM::Parser - Push parser interface
 
 =head1 SYNOPSIS
 
-    my $parser = CommonMark::Parser->new;
+    my $parser = CommonMark::GFM::Parser->new;
     $parser->feed($string);
     $parser->feed($another_string);
     my $doc = $parser->finish;
 
 =head1 DESCRIPTION
 
-C<CommonMark::Parser> provides a push parser interface to parse CommonMark
+C<CommonMark::GFM::Parser> provides a push parser interface to parse GitHub Flavored Markdown
 documents.
 
 =head2 new
 
-   my $parser = CommonMark::Parser->new( [$options] );
+   my $parser = CommonMark::GFM::Parser->new( [$options] );
 
 Creates a parser object. C<$options> is a bit field containing the parser
 options. It defaults to zero (C<OPT_DEFAULT>). See
-L<CommonMark/"Parser options">.
+L<CommonMark::GFM/"Parser options">.
 
 =head2 feed
 
@@ -32,8 +32,8 @@ Feeds a part of the input Markdown to the parser.
 
     my $doc = $parser->finish;
 
-Parses a CommonMark document from the strings added with C<feed> returning
-the L<CommonMark::Node> of the document root.
+Parses a GitHub Flavored Markdown document from the strings added with C<feed> returning
+the L<CommonMark::GFM::Node> of the document root.
 
 =head1 COPYRIGHT
 
