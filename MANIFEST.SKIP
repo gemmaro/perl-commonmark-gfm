@@ -1,0 +1,12 @@
+CommonMark[.](bs|c|o)
+INSTALL[.]SKIP
+[.]bak$
+direnv/
+envrc
+git
+blib/
+compile_flags
+vendor/
+~$
+MYMETA
+pm_to_blib
