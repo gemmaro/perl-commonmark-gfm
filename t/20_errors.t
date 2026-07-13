@@ -5,7 +5,7 @@ use Symbol;
 use Test::More tests => 10;
 
 BEGIN {
-    use_ok('CommonMark');
+    use_ok('CommonMark::GFM');
 }
 
 {
@@ -16,7 +16,7 @@ BEGIN {
 
 my $handle = Symbol::gensym;
 tie *$handle, 'MyHandle';
-eval { CommonMark->parse_file(*$handle); };
+eval { CommonMark::GFM->parse_file(*$handle); };
 like(
     $@,
     qr/parse_file: file is not a file handle/,
@@ -30,14 +30,14 @@ like(
 }
 
 my $obj = MyClass->new;
-eval { CommonMark::Node::get_type($obj); };
+eval { CommonMark::GFM::Node::get_type($obj); };
 like(
     $@,
-    qr/get_type: node is not of type CommonMark::Node/,
+    qr/get_type: node is not of type CommonMark::GFM::Node/,
     'get_type on wrong class dies'
 );
 
-my $doc       = CommonMark->parse_document('*text*');
+my $doc       = CommonMark::GFM->parse_document('*text*');
 my $paragraph = $doc->first_child;
 my $emph      = $paragraph->first_child;
 my $text      = $emph->first_child;
@@ -66,8 +66,8 @@ eval { $doc->render( format => 'non_existent' ); };
 like( $@, qr/invalid format/, 'render with invalid format' );
 
 eval {
-    my $paragraph = CommonMark->create_paragraph(
-        children => [ CommonMark->create_text( literal => 'text' ), ],
+    my $paragraph = CommonMark::GFM->create_paragraph(
+        children => [ CommonMark::GFM->create_text( literal => 'text' ), ],
         text     => 'text',
     );
 };
@@ -77,10 +77,10 @@ like(
     'create_text with children and text'
 );
 
-eval { my $doc = CommonMark->parse( smart => 1 ); };
+eval { my $doc = CommonMark::GFM->parse( smart => 1 ); };
 like( $@, qr/must provide either string or file/, 'parse without input' );
 
-eval { my $doc = CommonMark->parse( string => 'md', file => \*STDIN ); };
+eval { my $doc = CommonMark::GFM->parse( string => 'md', file => \*STDIN ); };
 like( $@, qr/can't provide both string and file/,
     'parse with string and file' );
 

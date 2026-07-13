@@ -5,7 +5,7 @@ use File::Spec::Functions qw(catfile);
 use Test::More tests => 11;
 
 BEGIN {
-    use_ok( 'CommonMark', ':opt' );
+    use_ok( 'CommonMark::GFM', ':opt' );
 }
 
 {
@@ -13,11 +13,11 @@ BEGIN {
     my $file;
 
     open( $file, '<', $filename ) or die("$filename: $!");
-    my $doc1 = CommonMark->parse_file($file);
+    my $doc1 = CommonMark::GFM->parse_file($file);
     close($file);
 
     open( $file, '<', $filename ) or die("$filename: $!");
-    my $doc2 = CommonMark->parse( file => $file );
+    my $doc2 = CommonMark::GFM->parse( file => $file );
     close($file);
 
     is( $doc2->render_html, $doc1->render_html, 'parse works with file' );
@@ -25,7 +25,7 @@ BEGIN {
 
 {
     my $md            = q{Pretty "smart" -- don't you think?};
-    my $doc           = CommonMark->parse( string => $md, smart => 1 );
+    my $doc           = CommonMark::GFM->parse( string => $md, smart => 1 );
     my $expected_html = <<EOF;
 <p>Pretty \x{201C}smart\x{201D} \x{2013} don\x{2019}t you think?</p>
 EOF
@@ -38,7 +38,7 @@ EOF
 }
 
 {
-    my $all_opts = CommonMark::_extract_opts(
+    my $all_opts = CommonMark::GFM::_extract_opts(
         {
             sourcepos     => 1,
             hardbreaks    => 'yes',
@@ -54,7 +54,7 @@ EOF
       OPT_NORMALIZE | OPT_VALIDATE_UTF8 | OPT_SMART | OPT_UNSAFE;
     is( $all_opts, $expected, 'extracting options works' );
 
-    my $no_opts = CommonMark::_extract_opts(
+    my $no_opts = CommonMark::GFM::_extract_opts(
         {
             sourcepos     => undef,
             hardbreaks    =>  0,
@@ -69,7 +69,7 @@ EOF
 }
 
 {
-    my $doc = CommonMark->parse_document('test');
+    my $doc = CommonMark::GFM->parse_document('test');
 
     for my $format (qw(html xml commonmark latex man)) {
         my $method   = "render_$format";
