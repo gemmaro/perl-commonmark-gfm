@@ -5,7 +5,7 @@ use Symbol;
 use Test::More tests => 5;
 
 BEGIN {
-    use_ok('CommonMark', ':node');
+    use_ok( 'CommonMark', ':node' );
 }
 
 my $md = <<'EOF';
@@ -29,17 +29,17 @@ $result->append_child($paragraph);
 $emph->insert_before($text);
 $space->insert_after($strong);
 
-is($result->render_html, $expected_html, 'tree manipulation');
+is( $result->render_html, $expected_html, 'tree manipulation' );
 
-for my $i (1..4) {
-    $paragraph->first_child->insert_before($paragraph->last_child);
+for my $i ( 1 .. 4 ) {
+    $paragraph->first_child->insert_before( $paragraph->last_child );
 }
-is($result->render_html, $expected_html, 'rotate right');
+is( $result->render_html, $expected_html, 'rotate right' );
 
-for my $i (1..4) {
-    $paragraph->last_child->insert_after($paragraph->first_child);
+for my $i ( 1 .. 4 ) {
+    $paragraph->last_child->insert_after( $paragraph->first_child );
 }
-is($result->render_html, $expected_html, 'rotate left');
+is( $result->render_html, $expected_html, 'rotate left' );
 
 $emph->replace($strong);
 $space->unlink;
@@ -47,5 +47,5 @@ $space->unlink;
 $expected_html = <<'EOF';
 <p>normal, <strong>strong</strong></p>
 EOF
-is($result->render_html, $expected_html, 'replace');
+is( $result->render_html, $expected_html, 'replace' );
 

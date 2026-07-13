@@ -5,12 +5,12 @@ use Symbol;
 use Test::More tests => 2;
 
 BEGIN {
-    use_ok('CommonMark', ':node');
+    use_ok( 'CommonMark', ':node' );
 }
 
 sub create_text {
     my $literal = shift;
-    my $node = CommonMark::Node->new(NODE_TEXT);
+    my $node    = CommonMark::Node->new(NODE_TEXT);
     $node->set_literal($literal);
     return $node;
 }
@@ -37,5 +37,5 @@ my $expected_html = <<EOF;
 <p>normal <em>emph</em> <strong>strong</strong></p>
 EOF
 
-is($doc->render_html, $expected_html, 'build tree');
+is( $doc->render_html, $expected_html, 'build tree' );
 

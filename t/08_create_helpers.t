@@ -5,7 +5,7 @@ use Symbol;
 use Test::More tests => 4;
 
 BEGIN {
-    use_ok('CommonMark', ':opt', ':list', ':delim');
+    use_ok( 'CommonMark', ':opt', ':list', ':delim' );
 }
 
 my $doc = CommonMark->create_document(
@@ -65,8 +65,8 @@ my $doc = CommonMark->create_document(
                 ),
                 CommonMark->create_softbreak,
                 CommonMark->create_link(
-                    url   => '/url',
-                    title => 'link title',
+                    url      => '/url',
+                    title    => 'link title',
                     children => [
                         CommonMark->create_strong(
                             text => 'link text',
@@ -113,10 +113,10 @@ my $expected_html = <<'EOF';
 <code>code</code><br />
 <s>html1</s><s>html2</s></p>
 EOF
-is($doc->render_html(OPT_UNSAFE), $expected_html, 'create_* helpers');
+is( $doc->render_html(OPT_UNSAFE), $expected_html, 'create_* helpers' );
 
 SKIP: {
-    skip('Requires libcmark 0.23', 1) if CommonMark->version < 0x001700;
+    skip( 'Requires libcmark 0.23', 1 ) if CommonMark->version < 0x001700;
 
     $doc = CommonMark->create_document(
         children => [
@@ -144,12 +144,12 @@ SKIP: {
 </div>
 EOF
 
-    is($doc->render_html, $expected_html, 'create_custom_* helpers');
+    is( $doc->render_html, $expected_html, 'create_custom_* helpers' );
 }
 
 SKIP: {
     # libcmark's HTML renderer ignores fence_info before 0.24.0.
-    skip('Requires libcmark 0.24', 1) if CommonMark->version < 0x001800;
+    skip( 'Requires libcmark 0.24', 1 ) if CommonMark->version < 0x001800;
 
     $doc = CommonMark->create_document(
         children => [
@@ -157,12 +157,13 @@ SKIP: {
                 fence_info => 'perl',
                 literal    => 'my @a = qw(1 2 3);',
             ),
-    ]);
+        ]
+    );
 
     $expected_html = <<'EOF';
 <pre><code class="language-perl">my @a = qw(1 2 3);</code></pre>
 EOF
 
-    is($doc->render_html, $expected_html, 'create_custom_* helpers');
+    is( $doc->render_html, $expected_html, 'create_custom_* helpers' );
 }
 
