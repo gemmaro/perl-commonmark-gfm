@@ -223,15 +223,21 @@ BOOT:
             { "EVENT_ENTER", CMARK_EVENT_ENTER },
             { "EVENT_EXIT", CMARK_EVENT_EXIT },
 
-            { "OPT_DEFAULT", CMARK_OPT_DEFAULT },
-            { "OPT_SOURCEPOS", CMARK_OPT_SOURCEPOS },
-            { "OPT_HARDBREAKS", CMARK_OPT_HARDBREAKS },
-            { "OPT_SAFE", CMARK_OPT_SAFE },
-            { "OPT_NOBREAKS", CMARK_OPT_NOBREAKS },
-            { "OPT_NORMALIZE", CMARK_OPT_NORMALIZE },
-            { "OPT_VALIDATE_UTF8", CMARK_OPT_VALIDATE_UTF8 },
-            { "OPT_SMART", CMARK_OPT_SMART },
-            { "OPT_UNSAFE", CMARK_OPT_UNSAFE }
+            { "OPT_DEFAULT"                       , CMARK_OPT_DEFAULT },
+            { "OPT_SOURCEPOS"                     , CMARK_OPT_SOURCEPOS },
+            { "OPT_HARDBREAKS"                    , CMARK_OPT_HARDBREAKS },
+            { "OPT_SAFE"                          , CMARK_OPT_SAFE },
+            { "OPT_UNSAFE"                        , CMARK_OPT_UNSAFE },
+            { "OPT_NOBREAKS"                      , CMARK_OPT_NOBREAKS },
+            { "OPT_NORMALIZE"                     , CMARK_OPT_NORMALIZE },
+            { "OPT_VALIDATE_UTF8"                 , CMARK_OPT_VALIDATE_UTF8 },
+            { "OPT_SMART"                         , CMARK_OPT_SMART },
+            { "OPT_GITHUB_PRE_LANG"               , CMARK_OPT_GITHUB_PRE_LANG },
+            { "OPT_LIBERAL_HTML_TAG"              , CMARK_OPT_LIBERAL_HTML_TAG },
+            { "OPT_FOOTNOTES"                     , CMARK_OPT_FOOTNOTES },
+            { "OPT_STRIKETHROUGH_DOUBLE_TILDE"    , CMARK_OPT_STRIKETHROUGH_DOUBLE_TILDE },
+            { "OPT_TABLE_PREFER_STYLE_ATTRIBUTES" , CMARK_OPT_TABLE_PREFER_STYLE_ATTRIBUTES },
+            { "OPT_FULL_INFO_STRING"              , CMARK_OPT_FULL_INFO_STRING },
         };
         size_t num_constants = sizeof(constants) / sizeof(constants[0]);
         size_t i;

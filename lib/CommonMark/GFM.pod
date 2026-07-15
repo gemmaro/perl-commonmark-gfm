@@ -199,6 +199,12 @@ following constants:
     CommonMark::GFM::OPT_NORMALIZE
     CommonMark::GFM::OPT_VALIDATE_UTF8
     CommonMark::GFM::OPT_SMART
+    CommonMark::GFM::OPT_GITHUB_PRE_LANG
+    CommonMark::GFM::OPT_LIBERAL_HTML_TAG
+    CommonMark::GFM::OPT_FOOTNOTES
+    CommonMark::GFM::OPT_STRIKETHROUGH_DOUBLE_TILDE
+    CommonMark::GFM::OPT_TABLE_PREFER_STYLE_ATTRIBUTES
+    CommonMark::GFM::OPT_FULL_INFO_STRING
 
 Parser options can be imported from L<CommonMark::GFM> with tag C<opt>.
 
@@ -230,6 +236,33 @@ strings flagged as UTF-8 that contain invalid UTF-8, for example with XS. The
 option may be used if you don't trust the input data and want to make
 absolutely sure that the output is valid UTF-8. If invalid bytes are found,
 they are replaced with the Unicode replacement character C<U+FFFD>.
+
+=item C<OPT_GITHUB_PRE_LANG>
+
+Use GitHub-style C<< <pre lang="x"> >> tags for code blocks instead of
+C<< <pre><code class="language-x"> >>.
+
+=item C<OPT_LIBERAL_HTML_TAG>
+
+Be liberal in interpreting inline HTML tags.
+
+=item C<OPT_FOOTNOTES>
+
+Parse footnotes.
+
+=item C<OPT_STRIKETHROUGH_DOUBLE_TILDE>
+
+Only parse strikethroughs if surrounded by exactly 2 tildes.  Gives
+some compatibility with redcarpet.
+
+=item C<OPT_TABLE_PREFER_STYLE_ATTRIBUTES>
+
+Use style attributes to align table cells instead of align attributes.
+
+=item C<OPT_FULL_INFO_STRING>
+
+Include the remainder of the info string in code blocks in a separate
+attribute.
 
 =back
 
