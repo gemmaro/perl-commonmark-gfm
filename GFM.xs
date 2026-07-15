@@ -394,6 +394,7 @@ INTERFACE:
     cmark_node_parent
     cmark_node_first_child
     cmark_node_last_child
+    cmark_node_parent_footnote_def
 
 int
 interface_get_int(cmark_node *node)

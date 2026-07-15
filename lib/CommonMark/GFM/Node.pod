@@ -183,8 +183,12 @@ the node.
     my $parent = $node->parent;
     my $child  = $node->first_child;
     my $child  = $node->last_child;
+    my $def    = $node->parent_footnote_def;
 
 These methods return the respective node in the tree structure.
+
+C<parent_footnote_def> returns the footnote reference of node, or NULL
+if node doesn't have a footnote reference.
 
 =head2 Tree manipulation
 

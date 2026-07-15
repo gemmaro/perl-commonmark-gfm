@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 2;
+use Test::More tests => 3;
 
 use CommonMark::GFM qw(:opt);
 
@@ -35,3 +35,5 @@ $expected_html = <<'EOF';
 </section>
 EOF
 is( $doc->render_html, $expected_html, 'parser works when enabled' );
+
+is $doc->first_child->first_child->next->parent_footnote_def->get_type, CommonMark::GFM::NODE_FOOTNOTE_DEFINITION;
