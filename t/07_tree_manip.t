@@ -49,3 +49,19 @@ $expected_html = <<'EOF';
 EOF
 is( $result->render_html, $expected_html, 'replace' );
 
+# # Is cmark-gfm okay?:
+# $doc = CommonMark::GFM->parse_document(<<END_GFM);
+#  ~~~~
+#  a
+#  ~~~~
+# END_GFM
+# print $doc->first_child->render_xml;
+# my $fenced = $doc->first_child->get_fenced(my $length, my $offset, my $character);
+# use Data::Dumper;
+# print Dumper [$fenced, $length, $offset, $character];
+# # $VAR1 = [
+# #           1,
+# #           undef,
+# #           undef,
+# #           '~'
+# #         ];

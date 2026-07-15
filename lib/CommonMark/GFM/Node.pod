@@ -165,12 +165,20 @@ render options.
     $node->set_on_enter($string);
     $node->set_on_exit($string);
 
+    # Others
+    my $fenced = $node->get_fenced(my $length, $offset, $character);
+    $node->set_fenced($fenced, $length, $offset, $character);
+
 Various accessors to get and set integer and string values of a node. Not
 all values are supported by every type of node. Getters return C<0> or
 C<undef> for unsupported values. Setters die on failure.
 
 See L</"Constants"> for a list of constants used for node types, list
 types, and list delimiters.
+
+Please be warned that C<get_fenced> and C<set_fenced> methods might
+not work well for some reason in cmark-gfm, e.g. it seems that it
+doesn't get length and offset correctly.
 
 =head2 Tree traversal
 

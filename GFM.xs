@@ -449,6 +449,19 @@ POSTCALL:
         croak("%s: invalid operation", GvNAME(CvGV(cv)));
     }
 
+int
+cmark_node_get_fenced(cmark_node *node, length, offset, character)
+    int &length = NULL
+    int &offset = NULL
+    char &character = NULL
+OUTPUT:
+    length
+    offset
+    character
+
+NO_OUTPUT int
+cmark_node_set_fenced(cmark_node *node, int fenced, int length, int offset, char character)
+
 void
 cmark_node_unlink(cmark_node *node)
 PREINIT:
