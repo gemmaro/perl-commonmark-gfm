@@ -212,6 +212,7 @@ is violated.
 =head3 Node types
 
     CommonMark::GFM::NODE_NONE => 0
+
     CommonMark::GFM::NODE_DOCUMENT
     CommonMark::GFM::NODE_BLOCK_QUOTE
     CommonMark::GFM::NODE_LIST
@@ -222,6 +223,8 @@ is violated.
     CommonMark::GFM::NODE_PARAGRAPH
     CommonMark::GFM::NODE_HEADING
     CommonMark::GFM::NODE_THEMATIC_BREAK
+    CommonMark::GFM::FOOTNOTE_DEFINITION
+
     CommonMark::GFM::NODE_TEXT
     CommonMark::GFM::NODE_SOFTBREAK
     CommonMark::GFM::NODE_LINEBREAK
@@ -232,6 +235,7 @@ is violated.
     CommonMark::GFM::NODE_STRONG
     CommonMark::GFM::NODE_LINK
     CommonMark::GFM::NODE_IMAGE
+    CommonMark::GFM::FOOTNOTE_REFERENCE
 
 Node types can be imported from L<CommonMark::GFM> with tag C<node>.
 

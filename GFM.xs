@@ -168,31 +168,47 @@ BOOT:
             const char *name;
             int value;
         } constants[] = {
+            /* error status */
             { "NODE_NONE", CMARK_NODE_NONE },
-            { "NODE_DOCUMENT", CMARK_NODE_DOCUMENT },
-            { "NODE_BLOCK_QUOTE", CMARK_NODE_BLOCK_QUOTE },
-            { "NODE_LIST", CMARK_NODE_LIST },
-            { "NODE_ITEM", CMARK_NODE_ITEM },
-            { "NODE_CODE_BLOCK", CMARK_NODE_CODE_BLOCK },
-            { "NODE_HTML", CMARK_NODE_HTML },
-            { "NODE_PARAGRAPH", CMARK_NODE_PARAGRAPH },
-            { "NODE_HEADER", CMARK_NODE_HEADER },
-            { "NODE_HRULE", CMARK_NODE_HRULE },
-            { "NODE_TEXT", CMARK_NODE_TEXT },
-            { "NODE_SOFTBREAK", CMARK_NODE_SOFTBREAK },
-            { "NODE_LINEBREAK", CMARK_NODE_LINEBREAK },
-            { "NODE_CODE", CMARK_NODE_CODE },
-            { "NODE_INLINE_HTML", CMARK_NODE_INLINE_HTML },
-            { "NODE_EMPH", CMARK_NODE_EMPH },
-            { "NODE_STRONG", CMARK_NODE_STRONG },
-            { "NODE_LINK", CMARK_NODE_LINK },
-            { "NODE_IMAGE", CMARK_NODE_IMAGE },
-            { "NODE_CUSTOM_BLOCK", CMARK_NODE_CUSTOM_BLOCK },
-            { "NODE_CUSTOM_INLINE", CMARK_NODE_CUSTOM_INLINE },
-            { "NODE_HTML_BLOCK", CMARK_NODE_HTML_BLOCK },
-            { "NODE_HEADING", CMARK_NODE_HEADING },
-            { "NODE_THEMATIC_BREAK", CMARK_NODE_THEMATIC_BREAK },
-            { "NODE_HTML_INLINE", CMARK_NODE_HTML_INLINE },
+
+            /* block */
+            { "NODE_DOCUMENT"            , CMARK_NODE_DOCUMENT },
+            { "NODE_BLOCK_QUOTE"         , CMARK_NODE_BLOCK_QUOTE },
+            { "NODE_LIST"                , CMARK_NODE_LIST },
+            { "NODE_ITEM"                , CMARK_NODE_ITEM },
+            { "NODE_CODE_BLOCK"          , CMARK_NODE_CODE_BLOCK },
+
+            { "NODE_HTML_BLOCK"          , CMARK_NODE_HTML_BLOCK },
+            { "NODE_HTML"                , CMARK_NODE_HTML }, /* deprecated */
+
+            { "NODE_CUSTOM_BLOCK"        , CMARK_NODE_CUSTOM_BLOCK },
+            { "NODE_PARAGRAPH"           , CMARK_NODE_PARAGRAPH },
+
+            { "NODE_HEADING"             , CMARK_NODE_HEADING },
+            { "NODE_HEADER"              , CMARK_NODE_HEADER }, /* deprecated */
+
+            { "NODE_THEMATIC_BREAK"      , CMARK_NODE_THEMATIC_BREAK },
+            { "NODE_HRULE"               , CMARK_NODE_HRULE }, /* deprecated */
+
+            { "NODE_FOOTNOTE_DEFINITION" , CMARK_NODE_FOOTNOTE_DEFINITION },
+            /* end block */
+
+            /* inline */
+            { "NODE_TEXT"               , CMARK_NODE_TEXT },
+            { "NODE_SOFTBREAK"          , CMARK_NODE_SOFTBREAK },
+            { "NODE_LINEBREAK"          , CMARK_NODE_LINEBREAK },
+            { "NODE_CODE"               , CMARK_NODE_CODE },
+
+            { "NODE_HTML_INLINE"        , CMARK_NODE_HTML_INLINE },
+            { "NODE_INLINE_HTML"        , CMARK_NODE_INLINE_HTML }, /* deprecated */
+
+            { "NODE_CUSTOM_INLINE"      , CMARK_NODE_CUSTOM_INLINE },
+            { "NODE_EMPH"               , CMARK_NODE_EMPH },
+            { "NODE_STRONG"             , CMARK_NODE_STRONG },
+            { "NODE_LINK"               , CMARK_NODE_LINK },
+            { "NODE_IMAGE"              , CMARK_NODE_IMAGE },
+            { "NODE_FOOTNOTE_REFERENCE" , CMARK_NODE_FOOTNOTE_REFERENCE },
+            /* end inline */
 
             { "NO_LIST", CMARK_NO_LIST },
             { "BULLET_LIST", CMARK_BULLET_LIST },
