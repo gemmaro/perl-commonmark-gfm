@@ -74,6 +74,7 @@ The remaining options enable the respective L<render options|/"Render options">:
     my $xml   = $node->render_xml( [$options] )
     my $man   = $node->render_man( [$options], [$width] )
     my $md    = $node->render_commonmark( [$options], [$width] )
+    my $text  = $node->render_plaintext( [$options], [$width] )
     my $latex = $node->render_latex( [$options], [$width] )
 
 These methods render the contents of the node in the respective format.

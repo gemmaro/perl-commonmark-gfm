@@ -38,6 +38,7 @@
 #define cmark_node_render_xml         cmark_render_xml
 #define cmark_node_render_man         cmark_render_man
 #define cmark_node_render_commonmark  cmark_render_commonmark
+#define cmark_node_render_plaintext   cmark_render_plaintext
 #define cmark_node_render_latex       cmark_render_latex
 
 static SV*
@@ -514,6 +515,7 @@ INIT:
 INTERFACE:
     cmark_node_render_man
     cmark_node_render_commonmark
+    cmark_node_render_plaintext
     cmark_node_render_latex
 
 
