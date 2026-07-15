@@ -1,5 +1,12 @@
 Revision history for Perl module CommonMark::GFM
 
+????????  not yet
+    - Add GitHub Flavored Markdown specific block and inline constants.
+    - Add GitHub specific option constants.
+    - Add parent_footnote_def method.
+    - Add render_plaintext method.
+    - Add fenced getter and setter methods.
+
 0.320000  2026-07-14
     - Initial release of CommonMark::GFM module
     - Module namespace has changed from CommonMark:: to CommonMark::GFM::
